@@ -2,7 +2,6 @@ package backend.likelion.todos.member;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-import backend.likelion.todos.member.request.SignupRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

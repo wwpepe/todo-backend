@@ -1,4 +1,4 @@
-package backend.likelion.todos.member.request;
+package backend.likelion.todos.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
