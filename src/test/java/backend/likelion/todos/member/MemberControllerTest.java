@@ -14,11 +14,34 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @DisplayName("회원 컨트롤러 (MemberController) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class MemberControllerTest extends ApiTest {
+
+    @Test
+    void RestController_빈으로_등록한다() {
+        // when
+        boolean isRestController = MemberController.class.isAnnotationPresent(RestController.class);
+
+        // then
+        assertThat(isRestController).isTrue();
+    }
+
+    @Test
+    void members_로_들어오는_요청을_처리한다() {
+        // given
+        RequestMapping requestMapping = MemberController.class.getAnnotation(RequestMapping.class);
+
+        // when
+        String uri = requestMapping.value()[0];
+
+        // then
+        assertThat(uri).isEqualTo("/members");
+    }
 
     @Nested
     class 회원가입_시 {
