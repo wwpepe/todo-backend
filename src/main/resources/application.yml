@@ -1,0 +1,3 @@
+jwt:
+  secretKey: Q05VLUxJS0UtTElPTi1BUFBMSUNBVElPTi1TRUNSRVQtS0VZ  #CNU-LIKE-LION-APPLICATION-SECRET-KEY 를 base 64로 인코딩한 값
+  accessTokenExpirationDay: 100 # 100일로 설정
