@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import backend.likelion.todos.common.ConflictException;
 import backend.likelion.todos.common.NotFoundException;
 import backend.likelion.todos.common.UnAuthorizedException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Service;
 
 @SpringBootTest
 @DisplayName("회원 서비스 (MemberService) 은(는)")
@@ -30,6 +33,29 @@ class MemberServiceTest {
     @BeforeEach
     void setUp() {
         memberRepository.clear();
+    }
+
+    @Test
+    void Service_빈으로_등록한다() {
+        // when
+        boolean isService = MemberService.class.isAnnotationPresent(Service.class);
+
+        // then
+        assertThat(isService).isTrue();
+    }
+
+    @Test
+    void MemberRepository_를_받는_생성자_단_하나만이_존재한다() {
+        // when
+        Constructor<?>[] declaredConstructors = MemberService.class.getDeclaredConstructors();
+
+        // then
+        assertThat(declaredConstructors).hasSize(1);
+        Constructor<?> ctor = declaredConstructors[0];
+        assertThat(ctor.getParameters())
+                .hasSize(1)
+                .extracting(Parameter::getType)
+                .containsOnly((Class) MemberRepository.class);
     }
 
     @Nested

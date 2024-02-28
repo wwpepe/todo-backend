@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.stereotype.Repository;
 
 @DisplayName("회원 저장소 (MemberRepository) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
@@ -15,6 +16,15 @@ import org.junit.jupiter.api.Test;
 class MemberRepositoryTest {
 
     private final MemberRepository memberRepository = new MemberRepository();
+
+    @Test
+    void Repository_빈으로_등록한다() {
+        // when
+        boolean isRepository = MemberRepository.class.isAnnotationPresent(Repository.class);
+
+        // then
+        assertThat(isRepository).isTrue();
+    }
 
     @Test
     void 회원_객체에_Id를_세팅하고_저장한다() {
