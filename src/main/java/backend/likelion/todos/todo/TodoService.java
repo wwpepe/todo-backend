@@ -25,69 +25,47 @@ public class TodoService {
     private final GoalRepository goalRepository;
     private final TodoRepository todoRepository;
 
+    // Todo를 저장하고 저장된 Todo의 ID를 반환합니다.
     public Long save(Long goalId, Long memberId, String content, LocalDate date) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("회원 정보가 없습니다."));
-        Goal goal = goalRepository.findById(goalId)
-                .orElseThrow(() -> new NotFoundException("목표 정보가 없습니다."));
-        goal.validateMember(member);
-        Todo todo = new Todo(content, date, goal);
-        return todoRepository.save(todo)
-                .getId();
+        // TODO [3단계] memberId로 회원 정보를 조회하고, 없으면 "회원 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] goalId로 목표 정보를 조회하고, 없으면 "목표 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] 조회한 목표의 멤버가 입력된 멤버와 동일한지 확인하세요.
+        // TODO [3단계] Todo 인스턴스를 생성하고 todoRepository에 저장한 후, 저장된 Todo의 ID를 반환하세요.
+        return null;
     }
 
+    // 주어진 Todo의 내용과 날짜를 업데이트합니다.
     public void update(Long todoId, Long memberId, String content, LocalDate date) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("회원 정보가 없습니다."));
-        Todo todo = todoRepository.findById(todoId)
-                .orElseThrow(() -> new NotFoundException("투두 정보가 없습니다."));
-        todo.validateMember(member);
-        todo.update(content, date);
+        // TODO [3단계] memberId로 회원 정보를 조회하고, 없으면 "회원 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] todoId로 투두 정보를 조회하고, 없으면 "투두 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] 조회한 투두의 멤버가 입력된 멤버와 동일한지 확인하고, 내용 및 날짜를 업데이트하세요.
     }
 
+    // 주어진 Todo를 완료 상태로 표시합니다.
     public void check(Long todoId, Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("회원 정보가 없습니다."));
-        Todo todo = todoRepository.findById(todoId)
-                .orElseThrow(() -> new NotFoundException("투두 정보가 없습니다."));
-        todo.validateMember(member);
-        todo.check();
+        // TODO [3단계] memberId로 회원 정보를 조회하고, 없으면 "회원 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] todoId로 투두 정보를 조회하고, 없으면 "투두 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] 조회한 투두의 멤버가 입력된 멤버와 동일한지 확인하고, 투두를 완료 상태로 표시하세요.
     }
 
+    // 주어진 Todo를 미완료 상태로 표시합니다.
     public void uncheck(Long todoId, Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("회원 정보가 없습니다."));
-        Todo todo = todoRepository.findById(todoId)
-                .orElseThrow(() -> new NotFoundException("투두 정보가 없습니다."));
-        todo.validateMember(member);
-        todo.uncheck();
+        // TODO [3단계] memberId로 회원 정보를 조회하고, 없으면 "회원 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] todoId로 투두 정보를 조회하고, 없으면 "투두 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] 조회한 투두의 멤버가 입력된 멤버와 동일한지 확인하고, 투두를 미완료 상태로 표시하세요.
     }
 
+    // 주어진 Todo를 삭제합니다.
     public void delete(Long todoId, Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("회원 정보가 없습니다."));
-        Todo todo = todoRepository.findById(todoId)
-                .orElseThrow(() -> new NotFoundException("투두 정보가 없습니다."));
-        todo.validateMember(member);
-        todoRepository.delete(todo);
+        // TODO [3단계] memberId로 회원 정보를 조회하고, 없으면 "회원 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] todoId로 투두 정보를 조회하고, 없으면 "투두 정보가 없습니다." 메시지와 함께 NotFoundException을 발생시키세요.
+        // TODO [3단계] 조회한 투두의 멤버가 입력된 멤버와 동일한지 확인하고, 투두를 삭제하세요.
     }
 
+    // 특정 회원 ID와 날짜에 해당하는 모든 Todo를 찾아 TodoWithDayResponse 리스트로 반환합니다.
     public List<TodoWithDayResponse> findAllByMemberIdAndDate(Long memberId, YearMonth date) {
-        List<Todo> todos = todoRepository.findAllByMemberIdAndDate(memberId, date);
-        Map<Integer, List<Todo>> todoWithDays = todos.stream()
-                .collect(Collectors.groupingBy(it -> it.getDate().getDayOfMonth()));
-        List<TodoWithDayResponse> responses = new ArrayList<>();
-        for (Entry<Integer, List<Todo>> todo : todoWithDays.entrySet()) {
-            List<TodoResponse> todoResponses = todo.getValue().stream()
-                    .map(it -> new TodoResponse(
-                            it.getId(),
-                            it.getContent(),
-                            it.getGoal().getId(),
-                            it.isCompleted()
-                    ))
-                    .toList();
-            responses.add(new TodoWithDayResponse(todo.getKey(), todoResponses));
-        }
-        return responses;
+        // TODO [3단계] memberId와 date를 사용하여 해당하는 모든 Todo를 조회하세요.
+        // TODO [3단계] 조회된 Todo를 날짜별로 그룹화하고, 각 그룹을 TodoWithDayResponse 객체로 변환하여 리스트로 반환하세요.
+        return null;
     }
 }
