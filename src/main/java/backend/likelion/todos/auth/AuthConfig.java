@@ -14,6 +14,7 @@ public class AuthConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(authArgumentResolver);
+        // TODO [6단계] resolvers 리스트에 authArgumentResolver를 추가하세요.
     }
+
 }

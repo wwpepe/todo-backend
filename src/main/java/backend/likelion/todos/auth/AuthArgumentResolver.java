@@ -19,9 +19,8 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean b = parameter.hasParameterAnnotation(Auth.class);
-        boolean equals = parameter.getParameterType().equals(Long.class);
-        return b && equals;
+        // TODO [6단계] parameter가 @Auth 어노테이션을 갖고 있고, 파라미터 타입이 Long.class인 경우 true를 반환하는 조건을 구현하세요.
+        return false;
     }
 
     @Override
@@ -31,15 +30,13 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
             NativeWebRequest webRequest,
             WebDataBinderFactory binderFactory
     ) {
-        String accessToken = extractAccessToken(webRequest);
-        return jwtService.extractMemberId(accessToken);
+        // TODO [6단계] webRequest로부터 accessToken을 추출하고, jwtService를 사용하여 memberId를 추출하여 반환하는 로직을 구현하세요.
+        return null;
     }
 
     private static String extractAccessToken(NativeWebRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        throw new UnAuthorizedException("로그인 후 접근할 수 있습니다.");
+        // TODO [6단계] request 헤더에서 "Authorization" 헤더 값을 추출하여 "Bearer "로 시작하는 accessToken을 반환하세요. 유효하지 않을 경우 "로그인 후 접근할 수 있습니다." 메시지와 함께 UnAuthorizedException을 발생시키는 로직을 구현하세요.
+        return null;
     }
+
 }
