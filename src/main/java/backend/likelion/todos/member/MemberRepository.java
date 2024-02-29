@@ -37,5 +37,4 @@ public class MemberRepository {
     public void clear() {
         // TODO [1단계] members 맵의 모든 내용을 제거하세요.
     }
-
 }
