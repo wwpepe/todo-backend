@@ -23,10 +23,9 @@ public class Member {
         this.id = id;
     }
 
+    // 로그인을 시도하고 비밀번호가 일치하지 않으면 UnAuthorizedException을 발생시킵니다.
     public void login(String password) {
-        if (this.password.equals(password)) {
-            return;
-        }
-        throw new UnAuthorizedException("비밀번호가 일치하지 않습니다");
+        // TODO [1단계] 입력받은 password가 이 객체의 password와 같은지 확인하세요. 같지 않다면 UnAuthorizedException을 발생시키세요.
     }
+
 }

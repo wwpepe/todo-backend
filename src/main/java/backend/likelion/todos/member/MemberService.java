@@ -12,31 +12,27 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    // 회원 가입을 처리하고, 저장된 회원의 ID를 반환합니다.
     public Long signup(String username, String password, String nickname, String profileImageUrl) {
-        memberRepository.findByUsername(username)
-                .ifPresent(it -> {
-                    throw new ConflictException("해당 아이디로 이미 가입한 회원이 있습니다");
-                });
-        Member member = new Member(username, password, nickname, profileImageUrl);
-        return memberRepository.save(member)
-                .getId();
+        // TODO [1단계] username으로 기존 회원이 있는지 확인하고, 있으면 ConflictException을 발생시키세요.
+        // TODO [1단계] Member 인스턴스를 생성하세요.
+        // TODO [1단계] 생성된 Member 인스턴스를 memberRepository에 저장하고, 저장된 멤버의 ID를 반환하세요.
+        return null;
     }
 
+    // 로그인을 처리하고, 로그인한 회원의 ID를 반환합니다.
     public Long login(String username, String password) {
-        Member member = memberRepository.findByUsername(username)
-                .orElseThrow(() -> new UnAuthorizedException("존재하지 않는 아이디입니다."));
-        member.login(password);
-        return member.getId();
+        // TODO [1단계] username으로 회원을 찾아오고, 없으면 UnAuthorizedException을 발생시키세요.
+        // TODO [1단계] 찾아온 Member 인스턴스에 대해 password가 일치하는지 확인하세요.
+        // TODO [1단계] 로그인이 성공적이면, 해당 회원의 ID를 반환하세요.
+        return null;
     }
 
+    // 회원 ID로 회원 정보를 조회하고, 그 결과를 MemberResponse로 반환합니다.
     public MemberResponse findById(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("회원 정보가 없습니다."));
-        return new MemberResponse(
-                member.getId(),
-                member.getUsername(),
-                member.getNickname(),
-                member.getProfileImageUrl()
-        );
+        // TODO [1단계] memberId로 회원 정보를 찾아오고, 없으면 NotFoundException을 발생시키세요.
+        // TODO [1단계] 찾아온 Member 인스턴스로부터 MemberResponse 객체를 생성하여 반환하세요.
+        return null;
     }
+
 }
