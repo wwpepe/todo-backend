@@ -1,11 +1,23 @@
 package backend.likelion.todos.member;
 
 import backend.likelion.todos.common.UnAuthorizedException;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Member {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
@@ -17,10 +29,6 @@ public class Member {
         this.password = password;
         this.nickname = nickname;
         this.profileImageUrl = profileImageUrl;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void login(String password) {

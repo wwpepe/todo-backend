@@ -32,7 +32,7 @@ public class TodoController {
         return ResponseEntity.created(URI.create("/todos/" + todoId)).build();
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/check")
     public void check(
             @Auth Long memberId,
             @PathVariable("id") Long todoId
@@ -40,7 +40,7 @@ public class TodoController {
         todoService.check(todoId, memberId);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/uncheck")
     public void uncheck(
             @Auth Long memberId,
             @PathVariable("id") Long todoId

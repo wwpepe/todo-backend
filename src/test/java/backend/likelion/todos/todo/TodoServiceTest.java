@@ -45,9 +45,9 @@ class TodoServiceTest {
 
     @BeforeEach
     void setUp() {
-        todoRepository.clear();
-        goalRepository.clear();
-        memberRepository.clear();
+        todoRepository.deleteAll();
+        goalRepository.deleteAll();
+        memberRepository.deleteAll();
         member = memberRepository.save(new Member("1", "1", "1", "1"));
         other = memberRepository.save(new Member("2", "2", "2", "2"));
         goal = goalRepository.save(new Goal("g", "c", member));
@@ -301,7 +301,9 @@ class TodoServiceTest {
             todoRepository.save(new Todo("7", LocalDate.of(2043, 10, 21), goal));
 
             // when
-            List<Todo> result = todoRepository.findAllByMemberIdAndDate(member.getId(), YearMonth.of(2024, 10));
+            List<Todo> result = todoRepository.findAllByMemberIdAndDate(member.getId(),
+                    LocalDate.from(YearMonth.of(2024, 10))
+            );
 
             // then
             assertThat(result)

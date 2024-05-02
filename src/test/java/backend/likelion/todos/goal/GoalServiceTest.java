@@ -37,8 +37,8 @@ class GoalServiceTest {
 
     @BeforeEach
     void setUp() {
-        goalRepository.clear();
-        memberRepository.clear();
+        goalRepository.deleteAll();
+        memberRepository.deleteAll();
         member = memberRepository.save(new Member("1", "1", "1", "1"));
         other = memberRepository.save(new Member("2", "2", "2", "2"));
     }
