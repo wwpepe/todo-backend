@@ -3,15 +3,22 @@ package backend.likelion.todos.todo;
 import backend.likelion.todos.common.ForbiddenException;
 import backend.likelion.todos.goal.Goal;
 import backend.likelion.todos.member.Member;
+import jakarta.persistence.Entity;
 import java.time.LocalDate;
 import lombok.Getter;
 
 @Getter
+// TODO [10 단계] : 롬봉을 통해 기본 생성자를 PROTECTED 접근 제한자로 생성하세요.
+// TODO [10 단계] : Todo 객체를 Entity 로 정의하세요.
 public class Todo {
 
+    // TODO [10 단계] : id를 PK, Auto Increment로 설정하세요.
     private Long id;
+
     private String content;
     private LocalDate date;
+
+    // TODO [10 단계] : todo 와 goal 과의 관계를 설정합니다. (join 하는 컬럼명은 goal_id로 설정합니다.), 지연 로딩을 사용합니다.
     private Goal goal;
     private boolean isCompleted;
 
@@ -20,10 +27,6 @@ public class Todo {
         this.date = date;
         this.goal = goal;
         this.isCompleted = false;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void validateMember(Member member) {
