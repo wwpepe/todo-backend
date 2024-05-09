@@ -32,7 +32,7 @@ class MemberServiceTest {
 
     @BeforeEach
     void setUp() {
-        memberRepository.clear();
+        memberRepository.deleteAll();
     }
 
     @Test

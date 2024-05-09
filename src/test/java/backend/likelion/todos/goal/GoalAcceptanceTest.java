@@ -14,6 +14,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -33,11 +34,12 @@ class GoalAcceptanceTest extends ApiTest {
     @Override
     protected void setUp() {
         super.setUp();
+        String username = UUID.randomUUID().toString();
         RestAssured.given()
                 .contentType(ContentType.JSON)
                 .log().all()
                 .body(new SignupRequest(
-                        "likelion",
+                        username,
                         "likelion1234",
                         "멋사",
                         "profile"
@@ -50,7 +52,7 @@ class GoalAcceptanceTest extends ApiTest {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .body(new LoginRequest(
-                        "likelion",
+                        username,
                         "likelion1234"
                 ))
                 .post("/members/login")
@@ -59,11 +61,12 @@ class GoalAcceptanceTest extends ApiTest {
                 .extract();
         member1Token = response1.as(LoginResponse.class).accessToken();
 
+        String otherUsername = UUID.randomUUID().toString();
         RestAssured.given()
                 .contentType(ContentType.JSON)
                 .log().all()
                 .body(new SignupRequest(
-                        "unlikelion",
+                        otherUsername,
                         "likelion1234",
                         "안멋사",
                         "profile"
@@ -76,7 +79,7 @@ class GoalAcceptanceTest extends ApiTest {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .body(new LoginRequest(
-                        "unlikelion",
+                        otherUsername,
                         "likelion1234"
                 ))
                 .post("/members/login")

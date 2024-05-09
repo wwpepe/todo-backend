@@ -29,8 +29,8 @@ public abstract class ApiTest {
     @BeforeEach
     protected void setUp() {
         RestAssured.port = port;
-        memberRepository.clear();
-        goalRepository.clear();
-        todoRepository.clear();
+        todoRepository.deleteAll();
+        goalRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 }

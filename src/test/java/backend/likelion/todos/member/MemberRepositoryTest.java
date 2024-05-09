@@ -8,14 +8,21 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
+@SpringBootTest
 @DisplayName("회원 저장소 (MemberRepository) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class MemberRepositoryTest {
 
-    private final MemberRepository memberRepository = new MemberRepository();
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Test
     void Repository_빈으로_등록한다() {
@@ -35,7 +42,7 @@ class MemberRepositoryTest {
         Member saved = memberRepository.save(member);
 
         // then
-        assertThat(saved.getId()).isEqualTo(1L);
+        assertThat(saved.getId()).isNotNull();
     }
 
     @Nested
@@ -93,13 +100,13 @@ class MemberRepositoryTest {
     }
 
     @Test
-    void clear_시_데이터를_다_지운다() {
+    void deleteAll_시_데이터를_다_지운다() {
         // given
         Member member = new Member("u", "p", "n", "p");
         memberRepository.save(member);
 
         // when
-        memberRepository.clear();
+        memberRepository.deleteAll();
 
         // then
         assertThat(memberRepository.findById(member.getId())).isEmpty();
