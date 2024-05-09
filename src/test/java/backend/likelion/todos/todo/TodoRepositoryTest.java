@@ -7,16 +7,16 @@ import backend.likelion.todos.goal.GoalRepository;
 import backend.likelion.todos.member.Member;
 import backend.likelion.todos.member.MemberRepository;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @SpringBootTest
 @DisplayName("투두 저장소 (TodoRepository) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
@@ -57,9 +57,7 @@ class TodoRepositoryTest {
         todoRepository.save(new Todo("7", LocalDate.of(2043, 10, 21), goal1));
 
         // when
-        List<Todo> result = todoRepository.findAllByMemberIdAndDate(member.getId(),
-                LocalDate.from(YearMonth.of(2024, 10))
-        );
+        List<Todo> result = todoRepository.findAllByMemberIdAndDateOrderByDayAsc(member.getId(), 2024, 10);
 
         // then
         assertThat(result)

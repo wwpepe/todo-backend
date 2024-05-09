@@ -10,9 +10,12 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-@DataJdbcTest
+@Transactional
+@SpringBootTest
 @DisplayName("회원 저장소 (MemberRepository) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -39,7 +42,7 @@ class MemberRepositoryTest {
         Member saved = memberRepository.save(member);
 
         // then
-        assertThat(saved.getId()).isEqualTo(1L);
+        assertThat(saved.getId()).isNotNull();
     }
 
     @Nested

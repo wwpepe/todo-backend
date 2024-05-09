@@ -12,8 +12,11 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-@DataJdbcTest
+@Transactional
+@SpringBootTest
 @DisplayName("목표 저장소 (GoalRepository) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -24,7 +27,7 @@ class GoalRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
     private final Member member1 = new Member("u", "p", "n", "p");
-    private final Member member2 = new Member("u", "p", "n", "p");
+    private final Member member2 = new Member("u2", "p", "n", "p");
 
     @BeforeEach
     void setUp() {

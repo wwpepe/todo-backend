@@ -16,7 +16,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @SpringBootTest
 @DisplayName("목표 서비스 (GoalService) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
@@ -183,7 +185,7 @@ class GoalServiceTest {
             Long goalId3 = goalService.save("목표3", "#111111", member.getId());
 
             // when
-            List<GoalResponse> response = goalService.findAllByMemberId(goalId1);
+            List<GoalResponse> response = goalService.findAllByMemberId(member.getId());
 
             // then
             assertThat(response)

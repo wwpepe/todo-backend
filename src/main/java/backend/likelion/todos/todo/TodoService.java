@@ -73,8 +73,9 @@ public class TodoService {
     }
 
     public List<TodoWithDayResponse> findAllByMemberIdAndDate(Long memberId, YearMonth date) {
-        LocalDate localDate = LocalDate.from(date);
-        List<Todo> todos = todoRepository.findAllByMemberIdAndDate(memberId, localDate);
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        List<Todo> todos = todoRepository.findAllByMemberIdAndDateOrderByDayAsc(memberId, year, month);
         Map<Integer, List<Todo>> todoWithDays = todos.stream()
                 .collect(Collectors.groupingBy(it -> it.getDate().getDayOfMonth()));
         List<TodoWithDayResponse> responses = new ArrayList<>();

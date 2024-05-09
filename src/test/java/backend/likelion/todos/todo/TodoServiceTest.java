@@ -10,7 +10,6 @@ import backend.likelion.todos.goal.GoalRepository;
 import backend.likelion.todos.member.Member;
 import backend.likelion.todos.member.MemberRepository;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +19,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @SpringBootTest
 @DisplayName("투두 서비스 (TodoService) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
@@ -301,9 +302,7 @@ class TodoServiceTest {
             todoRepository.save(new Todo("7", LocalDate.of(2043, 10, 21), goal));
 
             // when
-            List<Todo> result = todoRepository.findAllByMemberIdAndDate(member.getId(),
-                    LocalDate.from(YearMonth.of(2024, 10))
-            );
+            List<Todo> result = todoRepository.findAllByMemberIdAndDateOrderByDayAsc(member.getId(), 2024, 10);
 
             // then
             assertThat(result)
