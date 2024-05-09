@@ -17,7 +17,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @SpringBootTest
 @DisplayName("회원 서비스 (MemberService) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
@@ -26,14 +28,6 @@ class MemberServiceTest {
 
     @Autowired
     private MemberService memberService;
-
-    @Autowired
-    private MemberRepository memberRepository;
-
-    @BeforeEach
-    void setUp() {
-        memberRepository.deleteAll();
-    }
 
     @Test
     void Service_빈으로_등록한다() {
